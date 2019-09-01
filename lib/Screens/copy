@@ -1,0 +1,632 @@
+import 'package:flutter/material.dart';
+
+//component
+import '../component/HeaderGridView.dart';
+import '../component/AutoText.dart';
+
+
+//screen
+import '../productdetails.dart';
+
+
+//data
+import '../Data/DataProd.dart';
+
+
+class GridViewProd extends StatefulWidget {
+  @override
+  _GridViewProdState createState() => _GridViewProdState();
+}
+
+class _GridViewProdState extends State<GridViewProd> {
+
+  List<dynamic> items=DataProd().items;
+
+  Widget _buildButton(){
+    return Padding(
+      padding: const EdgeInsets.only(top:0.0,bottom: 2),
+      child: InkWell(
+          onTap: (){},
+          child: Container(
+
+              width: MediaQuery.of(context).size.width/3,
+              // height: 0,
+              decoration: BoxDecoration(
+                  color: Theme.of(context).accentColor,
+                  border: Border.all(color: Theme.of(context).accentColor,style: BorderStyle.solid),
+                  borderRadius: BorderRadius.all(Radius.circular(20))
+
+              ),
+              child: Container(
+                width:  (MediaQuery.of(context).size.width/3)-10,
+
+                //height: 30,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).accentColor,
+                    border: Border.all(color: Colors.white,style: BorderStyle.solid),
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Image(image: AssetImage("images/logo-shopcar.png"),width: 20,),
+                        SizedBox(width: 10,),
+                        AutoText(text:"اضف للسلة" ,size: 10,color:Colors.white,fontWeight: FontWeight.bold ,),
+                      ],
+                    )),
+              ))),
+    );
+  }
+
+  Widget  _buildItem(int index,double heightItem){
+
+    return Column(
+      children: <Widget>[
+        Container(
+          height: heightItem/3,
+          child: Stack(
+
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top:7.0),
+                child: InkWell(
+
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Product(
+                      name:items[index%items.length]['name'] ,
+                      image: items[index%items.length]['image'],
+                      price: items[index%items.length]['price'],
+                      favourite:items[index%items.length]['favourite'] ,
+                      index: index,
+                    )));
+                  },
+                  child: Container(
+
+                    decoration: BoxDecoration(
+                        image: DecorationImage(image: AssetImage(items[index%items.length]['image'],),fit: BoxFit.contain,)),
+                  ),
+                ),
+              ),
+              Positioned(
+                  left: 2,
+                  top: 2,
+                  child: IconButton(icon: Icon((items[index%items.length]['favourite'])?Icons.favorite:Icons.favorite_border),color:(items[index%items.length]['favourite'])?Theme.of(context).accentColor:Colors.grey ,iconSize: 15, onPressed: (){
+
+                    setState(() {
+                      items[index%items.length]['favourite']=!items[index%items.length]['favourite'];
+                    });
+                  }))
+            ],
+          ),
+        ),
+
+//        Positioned(
+//          top: heightItem/2,
+//          child:
+        Container(
+          //height: (heightItem/2)*(1/3),
+          width: (MediaQuery.of(context).size.width/2),
+          child: Center(
+            child: Column(
+              children: <Widget>[
+//                  Container(
+//                     // height: ((heightItem/2)*(1/3))/2,
+//                      width: (MediaQuery.of(context).size.width/4),
+//                      child:
+                AutoText(text:items[index%items.length]['name'] ,size: 20,),
+                //),
+
+
+//                  Container(
+//
+//                      //height: ((heightItem/2)*(1/3))/2,
+//                      width: (MediaQuery.of(context).size.width/4),
+//                      child:
+                AutoText(text:"${items[index%items.length]['price']} ريال",size: 15,color:Theme.of(context).accentColor,fontWeight: FontWeight.bold ,)
+                //  )
+
+              ],
+            ),
+          ),
+        ),
+        //),
+///////////////////////Button///////////////////
+//        Positioned(
+//          top: ((heightItem/2)*(1/3))+(heightItem/2),
+//          //right: (MediaQuery.of(context).size.width/4)-50,
+//          child:
+//          Container(
+//             // height: (heightItem/2)*.4,
+//              width: (MediaQuery.of(context).size.width/2),
+//              child:
+//              Center(child:
+        _buildButton()
+        // )
+        // ),
+        // )
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double width=MediaQuery.of(context).size.width;
+    double height=MediaQuery.of(context).size.height;
+    double heightItem=height/3;
+
+    return  ListView(
+      children: <Widget>[
+        Header(),
+        Container(
+          width: width,
+          height: height-120,
+          child: GridView.builder(
+            itemCount: 10,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,childAspectRatio: 1) ,
+            itemBuilder: (BuildContext context,int index){
+              return Container(
+                  height: heightItem,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey,width: 1),
+                      borderRadius: BorderRadius.all(Radius.circular(5))),
+
+                  child:  _buildItem(index,heightItem));
+            },
+
+
+          ),
+        ),
+
+      ],
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////// GridViewProd//////////////////////////
+import 'package:flutter/material.dart';
+
+//component
+import '../component/HeaderGridView.dart';
+import '../component/AutoText.dart';
+
+
+//screen
+import '../productdetails.dart';
+
+
+//data
+import '../Data/DataProd.dart';
+
+
+class GridViewProd extends StatefulWidget {
+  @override
+  _GridViewProdState createState() => _GridViewProdState();
+}
+
+class _GridViewProdState extends State<GridViewProd> {
+
+  List<dynamic> items=DataProd().items;
+
+  Widget _buildButton(){
+    return Padding(
+      padding: const EdgeInsets.only(top:10.0,bottom: 2),
+      child: InkWell(
+          onTap: (){},
+          child: Container(
+              width: MediaQuery.of(context).size.width/4,
+              height: 40,
+              decoration: BoxDecoration(
+                  color: Theme.of(context).accentColor,
+                  border: Border.all(color: Theme.of(context).accentColor,style: BorderStyle.solid),
+                  borderRadius: BorderRadius.all(Radius.circular(20))
+
+              ),
+              child: Container(
+                width:  (MediaQuery.of(context).size.width/4)-10,
+
+                height: 30,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).accentColor,
+                    border: Border.all(color: Colors.white,style: BorderStyle.solid),
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Image(image: AssetImage("images/logo-shopcar.png"),width: 20,),
+                        SizedBox(width: 10,),
+                        AutoText(text:"اضف للسلة" ,size: 10,color: Colors.white ,),
+
+                      ],
+                    )),
+              ))),
+    );
+  }
+
+  Widget  _buildItem(int index,double heightItem){
+
+    return Stack(
+      children: <Widget>[
+        Container(
+          height: heightItem/2,
+          child: Stack(
+
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top:7.0),
+                child: InkWell(
+
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Product(
+                      name:items[index%items.length]['name'] ,
+                      image: items[index%items.length]['image'],
+                      price: items[index%items.length]['price'],
+                      favourite:items[index%items.length]['favourite'] ,
+                      index: index,
+                    )));
+                  },
+                  child: Container(
+
+                    decoration: BoxDecoration(
+                        image: DecorationImage(image: AssetImage(items[index%items.length]['image'],),fit: BoxFit.contain,)),
+                  ),
+                ),
+              ),
+              Positioned(
+                  left: 2,
+                  top: 2,
+                  child: IconButton(icon: Icon((items[index%items.length]['favourite'])?Icons.favorite:Icons.favorite_border),color:(items[index%items.length]['favourite'])?Theme.of(context).accentColor:Colors.grey ,iconSize: 15, onPressed: (){
+
+                    setState(() {
+                      items[index%items.length]['favourite']=!items[index%items.length]['favourite'];
+                    });
+                  }))
+            ],
+          ),
+        ),
+
+        Positioned(
+          top: heightItem/2,
+          child: Container(
+            height: (heightItem/2)*(1/3),
+            width: (MediaQuery.of(context).size.width/2),
+            child: Center(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                      height: ((heightItem/2)*(1/3))/2,
+                      child:  Text(items[index%items.length]['name'],style: TextStyle(fontSize: ((((heightItem/2)*(1/3))/2)/1.6),fontWeight: FontWeight.bold,fontFamily:'Cairo',),maxLines: 1, )),
+
+                  Container(
+
+                      height: ((heightItem/2)*(1/3))/2,
+                      child: Text("${items[index%items.length]['price']} ريال",style: TextStyle(fontSize: (((heightItem/2)*(1/3))/2)/2,color:Theme.of(context).accentColor,fontWeight: FontWeight.bold ))
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+///////////////////////Button///////////////////
+        Positioned(
+          top: ((heightItem/2)*(1/3))+(heightItem/2),
+          //right: (MediaQuery.of(context).size.width/4)-50,
+          child: Container(
+              height: (heightItem/2)*.4,
+              width: (MediaQuery.of(context).size.width/2),
+              child: Center(child: _buildButton())
+          ),
+        )
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double width=MediaQuery.of(context).size.width;
+    double height=MediaQuery.of(context).size.height;
+    double heightItem=height/3;
+
+    return  ListView(
+      children: <Widget>[
+        Header(),
+        Container(
+          width: width,
+          height: height-120,
+          child: GridView.builder(
+            itemCount: 10,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,childAspectRatio: 1) ,
+            itemBuilder: (BuildContext context,int index){
+              return Container(
+                  height: heightItem,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey,width: 1),
+                      borderRadius: BorderRadius.all(Radius.circular(5))),
+
+                  child:  _buildItem(index,heightItem));
+            },
+
+
+          ),
+        ),
+
+      ],
+    );
+  }
+}
+
+
+
+////////////////////////////////////// Product deatails/////////////////////
+
+import 'package:flutter/material.dart';
+
+import 'component/carousel.dart';
+import 'package:share/share.dart';
+
+
+class Product extends StatefulWidget {
+  final String name;
+  final String price;
+  final String  image;
+  final bool favourite;
+  final int index ;
+  Product({this.name,this.price,this.image,this.index,this.favourite});
+
+  @override
+  _ProductState createState() => _ProductState(this.name,this.price,this.image,this.index,this.favourite);
+}
+
+class _ProductState extends State<Product> {
+
+  final String name;
+  final String price;
+  final String  image;
+  final bool favourite;
+  final int index ;
+  _ProductState(this.name,this.price,this.image,this.index,this.favourite);
+
+
+  Widget _buildTopCarousel(){
+
+    return Padding(
+        padding: const EdgeInsets.only(top:30,bottom:0,right: 20,left: 20),
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(
+              color: Colors.white,
+
+              borderRadius: BorderRadius.all(Radius.circular(6))
+
+          ),
+
+          child: ListView(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top:10,bottom:0,right: 20,left: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text("$price ر.س",style: TextStyle(fontSize: 15,color:Theme.of(context).accentColor,fontWeight: FontWeight.bold )),
+                    Row(
+                      children: <Widget>[
+                        IconButton(icon: Icon(Icons.share,size: 20,), onPressed: (){
+                          Share.share('check out my website https://example.com');
+                        },padding: EdgeInsets.all(2),alignment: Alignment.centerLeft,),
+                        IconButton(icon: Icon(favourite?Icons.favorite:Icons.favorite_border,color: Theme.of(context).accentColor,size: 20,),padding: EdgeInsets.only(left: 0),onPressed: (){},),
+                      ],
+                    ),
+
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+    );
+  }
+
+
+
+  Widget _buildBottomCarousel(){
+    return Padding(
+      padding: const EdgeInsets.only(top:0,bottom:0,right: 40,left: 40),
+      child: Container(
+        width:MediaQuery.of(context).size.width-80 ,
+        child: Column(
+
+          children: <Widget>[
+            Text("$name $name $name $name $name  ",textAlign: TextAlign.center,style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold ),maxLines: 2,),
+
+            Padding(
+              padding: const EdgeInsets.only(top:30,bottom:0,right: 40,left: 40),
+              child: Row(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Text("الماركة: "),
+                      Text("اجنر",style: TextStyle(color:Theme.of(context).accentColor,fontWeight: FontWeight.bold )),
+                    ],
+                  ),
+                  SizedBox(width: 30,),
+                  Row(
+                    children: <Widget>[
+                      Text("النوع: "),
+                      Text("5189-رجالي",style: TextStyle(color:Theme.of(context).accentColor,fontWeight: FontWeight.bold )),
+                    ],
+                  )
+
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top:30,bottom:0,right: 40,left: 40),
+              child: Row(
+                children: <Widget>[
+
+
+                  Text("100% اصلي ",style: TextStyle(fontWeight: FontWeight.bold )),
+
+
+                  SizedBox(width: 30,),
+
+                  Text("الدفع عند الاستلام",style: TextStyle(fontWeight: FontWeight.bold )),
+
+
+
+                ],
+              ),
+            ),
+
+
+            Padding(
+              padding: const EdgeInsets.only(top:20.0),
+              child: _buildButton(),
+            )
+
+
+
+
+
+          ],
+        ),
+
+
+      ),
+    );
+  }
+
+
+
+
+
+
+
+  Widget _buildButton(){
+
+    return Padding(
+      padding: const EdgeInsets.only(top:10.0,bottom: 2),
+      child: InkWell(
+          onTap: (){},
+          child: Container(
+              width: 100,
+              height: 28,
+              decoration: BoxDecoration(
+                  color: Theme.of(context).accentColor,
+                  border: Border.all(color: Theme.of(context).accentColor,style: BorderStyle.solid),
+                  borderRadius: BorderRadius.all(Radius.circular(20))
+
+              ),
+              child: Container(
+                width:  (MediaQuery.of(context).size.width/4)-10,
+
+                height: 30,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).accentColor,
+                    border: Border.all(color: Colors.white,style: BorderStyle.solid),
+                    borderRadius: BorderRadius.all(Radius.circular(20))
+
+
+                ),
+                child: Center(
+
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Image(image: AssetImage("images/logo-shopcar.png"),width: 20,),
+                        SizedBox(width: 10,),
+
+                        Text("اضف للسلة",style: TextStyle(fontSize: 10,color: Colors.white,fontWeight: FontWeight.bold),),
+                      ],
+                    )),
+              ))),
+    );
+  }
+
+  Widget _buildBody()
+  {
+    return ListView(
+      children: <Widget>[
+        Stack (
+            children:<Widget>[
+
+              Container(
+                height:MediaQuery.of(context).size.height/2 ,
+                color: Theme.of(context).accentColor,
+
+              ),
+
+              _buildTopCarousel(),
+
+              Padding(
+                padding: const EdgeInsets.only(top:80.0,right: 20,left: 20),
+                child: Container(
+                    height:(MediaQuery.of(context).size.height/2)-40 ,
+                    child:CarouselImage()
+                ),
+              ),
+              Positioned(
+                top:(MediaQuery.of(context).size.height/2)+60 ,
+                child:_buildBottomCarousel(),
+              )
+            ]
+        ),
+
+
+
+      ],
+    );
+
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+
+//  double width=MediaQuery.of(context).size.width;
+//    double height=MediaQuery.of(context).size.height;
+
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text(name,
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+
+              ),),
+            centerTitle: true,
+            leading:Image(image:AssetImage('images/icon-logo3.png')) ,
+            actions: <Widget>[
+              IconButton(icon: Icon(Icons.shopping_cart), onPressed:(){
+                Navigator.of(context).pushNamed('/cart');
+              }),
+              IconButton(icon: Icon(Icons.arrow_back_ios,textDirection: TextDirection.ltr
+                ,), onPressed: (){  Navigator.pop(context);
+              }),
+            ],
+          ),
+
+
+          body:_buildBody()
+
+      ),
+    );
+
+  }
+}
