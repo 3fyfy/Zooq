@@ -27,7 +27,7 @@ class _RateDialogState extends State<RateDialog> {
                   color: Theme.of(context).accentColor,
                   borderColor: Colors.black,
                   rating: rating,
-                  size: 15,
+                  size: 25,
                   starCount: 5,
                   spacing: 5.0,
                   allowHalfRating: false,

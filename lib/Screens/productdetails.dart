@@ -22,7 +22,7 @@ class _ProductState extends State<Product> {
   final String name;
   final String price;
   final String  image;
-  final bool favourite;
+   bool favourite=false;
   final int index ;
   _ProductState(this.name,this.price,this.image,this.index,this.favourite);
 
@@ -53,7 +53,11 @@ class _ProductState extends State<Product> {
                           IconButton(icon: Icon(Icons.share,size: 20,), onPressed: (){
                             Share.share('check out my website https://example.com');
                           },padding: EdgeInsets.all(2),alignment: Alignment.centerLeft,),
-                          IconButton(icon: Icon(favourite?Icons.favorite:Icons.favorite_border,color: Theme.of(context).accentColor,size: 20,),padding: EdgeInsets.only(left: 0),onPressed: (){},),
+                          IconButton(icon: Icon(favourite?Icons.favorite:Icons.favorite_border,color: Theme.of(context).accentColor,size: 20,),padding: EdgeInsets.only(left: 0),onPressed: (){
+                            setState(() {
+                              favourite=!favourite;
+                            });
+                          },),
                         ],
                       ),
 

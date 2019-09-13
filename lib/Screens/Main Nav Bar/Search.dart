@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zooq/Screens/Main Nav Bar/Mainnavbar.dart';
 
 
 import '../component/ButtonLogin.dart';
@@ -93,7 +94,10 @@ class _SearchState extends State<Search> {
                 Navigator.of(context).pushNamed('/cart');
               }),
               IconButton(icon: Icon(Icons.arrow_back_ios,textDirection: TextDirection.ltr
-                ,), onPressed: (){}),
+                ,), onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>Mainnavbar()));
+
+              }),
             ],
           ),
 

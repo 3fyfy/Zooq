@@ -139,13 +139,16 @@ class _GridViewProdState extends State<GridViewProd> {
             itemCount: 10,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,childAspectRatio: 1) ,
             itemBuilder: (BuildContext context,int index){
-              return Container(
-                  height: heightItem,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey,width: 1),
-                      borderRadius: BorderRadius.all(Radius.circular(5))),
+              return Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: Container(
+                    height: heightItem,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey,width: 1),
+                        borderRadius: BorderRadius.all(Radius.circular(5))),
 
-                  child:  _buildItem(index,heightItem));
+                    child:  _buildItem(index,heightItem)),
+              );
             },
 
 

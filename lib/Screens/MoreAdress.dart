@@ -10,12 +10,12 @@ class CustAddress extends StatefulWidget {
 }
 
 class _CustAddressState extends State<CustAddress> {
+  bool check=true;
 
 
   @override
   Widget build(BuildContext context) {
 
-    bool check=true;
 
     Widget _addressBuilder() {
       return Padding(
@@ -29,7 +29,11 @@ class _CustAddressState extends State<CustAddress> {
               children: <Widget>[
                 IconButton(
                   icon: Icon(Icons.check_circle,color:check?Colors.green:Colors.grey,),
-                  onPressed: () {}
+                  onPressed: () {
+                    setState(() {
+                      check=!check;
+                    });
+                  }
                 ),
                 Expanded(
                   child: Column(

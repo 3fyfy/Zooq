@@ -84,27 +84,19 @@ class _PayState extends State<Pay> {
         appBar:  AppBar(
           title: Text(
             'خيارات الدفع',
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          leading: Image.asset('images/icon-logo2.png'),
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.black,
 
-          actions: <Widget>[
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.shopping_cart),
-              color: Theme.of(context).accentColor,
-            ),
-            IconButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              icon: Icon(Icons.arrow_forward_ios),
-              color: Theme.of(context).accentColor,
-            ),
-          ],
-        ),
+          ),),
+        centerTitle: true,
+        leading:Image(image:AssetImage('images/icon-logo3.png')) ,
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.shopping_cart), onPressed:(){}),
+          IconButton(icon: Icon(Icons.arrow_back_ios,textDirection: TextDirection.ltr
+            ,), onPressed: (){Navigator.of(context).pop();}),
+        ],
+      ),
         backgroundColor:Color(0xffc01232),
         body: ListView(
           children: <Widget>[

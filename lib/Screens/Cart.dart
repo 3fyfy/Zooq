@@ -103,7 +103,7 @@ IconButton(icon: Icon(Icons.arrow_downward,size: 15,)
                 Padding(
                     padding: const EdgeInsets.only(top:30,bottom:20,right: 20,left: 20),
                     child: Container(
-                      height: MediaQuery.of(context).size.height- (AppBar().preferredSize.height+100),
+                      height: MediaQuery.of(context).size.height-kToolbarHeight-kBottomNavigationBarHeight-50,
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(6))
