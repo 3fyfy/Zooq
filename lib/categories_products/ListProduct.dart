@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../productdetails.dart';
+import 'package:zooq/categories_products/productdetails.dart';
 import '../../../component/AutoText.dart';
 
 class Listprod extends StatefulWidget {

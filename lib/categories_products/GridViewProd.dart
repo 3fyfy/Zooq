@@ -6,7 +6,7 @@ import '../component/AutoText.dart';
 
 
 //screen
-import '../productdetails.dart';
+import 'package:zooq/categories_products/productdetails.dart';
 
 
 //data
