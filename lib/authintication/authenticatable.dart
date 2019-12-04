@@ -1,4 +1,4 @@
-import 'user_model.dart';
+import '../user/user_model.dart';
 class Authenticatable{
   Future<User>register(String email,String password){
 

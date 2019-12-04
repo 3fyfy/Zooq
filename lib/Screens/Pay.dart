@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'component/rate.dart';
+import 'component/AutoText.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Pay extends StatefulWidget {
   @override
@@ -8,6 +10,7 @@ class Pay extends StatefulWidget {
 
 class _PayState extends State<Pay> {
   int _radioValue1 = -1;
+  double totalprice=0;
 
 
   void _showDialoge(){
@@ -30,51 +33,23 @@ class _PayState extends State<Pay> {
   Widget _buildItem(String txt1, String txt2, int val, String img) {
     return Padding(
       padding: const EdgeInsets.only(top: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              new Radio(
+      child: ListTile(
+
+       trailing :  Image.asset(img),
+        title:AutoText(text:txt1,lines: 2,) ,
+        subtitle: AutoText(text: txt2,lines: 2,),
+      leading:  new Radio(
                 activeColor: Colors.black,
                 value: val,
                 groupValue: _radioValue1,
                 onChanged: _handleRadioValueChange1,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    txt1,
-                    style: TextStyle(
-                        fontSize: 10,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    txt2,
-                    style: TextStyle(
-                      fontSize: 10,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 5),
-            child: Container(
-              
-              height: 40,
-              width: 50,
-              decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.contain,image: AssetImage(img))),
 
-            ),
-          ),
-        ],
-      ),
+      )
+
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -116,10 +91,9 @@ class _PayState extends State<Pay> {
                   borderRadius: BorderRadius.circular(5),
                   color: Colors.white,
                 ),
-                height: 460,
-                width: 400,
+
                 margin:
-                    EdgeInsets.only(right: 20, left: 20, top: 40, bottom: 80),
+                    EdgeInsets.only(right: 20, left: 20, top: 40, bottom: 40),
               ),
             ),
 
@@ -134,9 +108,9 @@ class _PayState extends State<Pay> {
               Padding(
                 padding: const EdgeInsets.only(left: 20,right: 20),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('299.00 ر.س',style: TextStyle(color: Color(0xffc01232),fontWeight:FontWeight.bold),),
+
                     InkWell(child: Text('تاكيد الدفع',style: TextStyle(color: Color(0xffc01232),fontWeight: FontWeight.bold),),onTap: (){
                       _showDialoge();
 

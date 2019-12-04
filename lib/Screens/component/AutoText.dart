@@ -6,9 +6,9 @@ class AutoText extends StatelessWidget {
   final Color color;
    double size=10;
   final FontWeight fontWeight;
+ int lines=1;
 
-
-  AutoText({this.text,this.color,this.size,this.fontWeight});
+  AutoText({this.text,this.color,this.size,this.fontWeight,this.lines});
   @override
   Widget build(BuildContext context) {
     return AutoSizeText(
@@ -19,10 +19,11 @@ class AutoText extends StatelessWidget {
         fontWeight: fontWeight
 
       ),
-      textAlign: TextAlign.center,
+      textAlign: TextAlign.start,
+      overflow: TextOverflow.clip,
 
-      maxLines: 1,
-      maxFontSize: 25,
+      maxLines: lines,
+      maxFontSize: 20,
     );
   }
 }

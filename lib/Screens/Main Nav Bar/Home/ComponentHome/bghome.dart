@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zooq/Screens/men3tor.dart';
+import 'package:zooq/categories_products/men3tor.dart';
 import '../../../component/AutoText.dart';
 
 
@@ -11,18 +11,22 @@ class BgHome extends StatelessWidget {
   Widget build(BuildContext context) {
    double heightBgHome= MediaQuery.of(context).size.height/4;
    double widthBgHome= MediaQuery.of(context).size.width;
+   print(widthBgHome);
 
     return Stack(
+      alignment: Alignment.topCenter,
 
       children: <Widget>[
         Container(
           height: heightBgHome+120,
           color: Colors.white,
+          width: widthBgHome,
 
         ),
 
         Container(
           height: (heightBgHome)+50,
+
           decoration: BoxDecoration(
               image: DecorationImage(image: AssetImage("images/bg-Home-firstrow.png"),fit: BoxFit.cover)
           ),
@@ -79,6 +83,7 @@ class BgHome extends StatelessWidget {
 
         Positioned(
             top: heightBgHome ,
+            //left: (widthBgHome)-50,
             right: (widthBgHome/2)-50,
             child: Container(
               width: 100,

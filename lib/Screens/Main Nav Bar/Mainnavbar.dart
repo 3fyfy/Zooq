@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 //Screen navbar
 
 //import 'navpages/Profile.dart';
-import 'Login.dart';
+import 'package:zooq/user/Login.dart';
 import 'List.dart';
-import 'Search.dart';
-import 'Favourites.dart';
+import 'package:zooq/categories_products/Search.dart';
+import 'package:zooq/categories_products/Favourites.dart';
 import 'Home/Home.dart';
 
 
@@ -29,7 +29,7 @@ class _MainnavbarState extends State<Mainnavbar> {
     ListDrawer(),
     Search(),
     Favourite(),
-    Login()
+    Home()
  ];
 
 
@@ -83,7 +83,7 @@ showSelectedLabels: false,
 
 
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
+              icon: Icon(Icons.home),
                 title: Padding(padding: EdgeInsets.only(bottom: 10))
             ),
           ],

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 //Component
 
-import 'component/GridViewProd.dart';
-import 'component/AutoText.dart';
+import 'package:zooq/categories_products/GridViewProd.dart';
+import '../Screens/component/AutoText.dart';
 
 
 //Screens
@@ -40,7 +40,7 @@ class _ShopMenState extends State<ShopMen> {
     ],
     ),
 
-          body:GridViewProd()
+          body:GridViewProd('Product')
 
         )
 

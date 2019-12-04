@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import '../men3tor.dart';
+import 'package:zooq/categories_products/men3tor.dart';
 
 import 'package:image_picker/image_picker.dart';
-
+import '../../user/user_controller.dart';
 
 class ListDrawer extends StatefulWidget {
   @override
@@ -14,6 +14,7 @@ class ListDrawer extends StatefulWidget {
 
 class _ListDrawerState extends State<ListDrawer> {
 
+  UserController userController=UserController();
   File _image;
 
   Future getImage(bool cam) async {
@@ -141,6 +142,28 @@ class _ListDrawerState extends State<ListDrawer> {
             _buildItem("عطور شبابي"),
             _buildItem("عطور كلاسيكي"),
             _buildItem("عطور العود"),
+
+
+  userController.currentUserController()!=null?Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: <Widget>[
+    Padding(
+    padding: const EdgeInsets.only(top:10.0,bottom: 10,right: 40),
+    child: InkWell(child: Text("تسجيل الخروج",style: TextStyle(fontSize: 15,color:Colors.white )),
+    onTap: ()async{
+     await userController.logOutController();
+     Navigator.of(context).pushReplacementNamed('/login');
+    },
+    ),
+    ),
+    Padding(
+    padding: const EdgeInsets.only(right: 40,left: 40),
+    child: Divider(color: Color(0xff31050f),height: 2,),
+    )
+    ],
+    ):null
+
     ],
       )
 

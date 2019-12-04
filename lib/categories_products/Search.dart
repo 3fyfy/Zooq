@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:zooq/Screens/Main Nav Bar/Mainnavbar.dart';
 
 
-import '../component/ButtonLogin.dart';
-import '../SearchResults.dart';
+import '../Screens/component/ButtonLogin.dart';
+import 'package:zooq/categories_products/SearchResults.dart';
 
 class Search extends StatefulWidget {
   @override

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'component/BottomNavPay.dart';
 import 'Pay.dart';
 import 'Address.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CustAddress extends StatefulWidget {
   @override
@@ -17,68 +18,15 @@ class _CustAddressState extends State<CustAddress> {
   Widget build(BuildContext context) {
 
 
-    Widget _addressBuilder() {
-      return Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Card(
-          elevation: 3,
-          child: Padding(
-            padding: const EdgeInsets.only(left:10.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.check_circle,color:check?Colors.green:Colors.grey,),
-                  onPressed: () {
-                    setState(() {
-                      check=!check;
-                    });
-                  }
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text('محمد علي'),
-                      Text(
-                        ' الرياض،شارع الملك فهد محمد.بجوار نادي الحوار الثفاقي0500050و',
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Color(0xffc01232),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Row(
-                  children: <Widget>[
-                    InkWell(
-                      child: Image.asset('images/icon-edit.png',height: 30,width: 20),
 
-                    ),
-                    SizedBox(width: 20,),
-                    InkWell(
-                      child: Image.asset('images/icon-trash.png',height: 30,width: 20),
-
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
-      );
-    }
 
     Widget _buildButton(){
 
       return Padding(
         padding: const EdgeInsets.only(top:30.0,bottom: 2),
         child: InkWell(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>Address()));
+            onTap: ()async{
+             await Navigator.push(context, MaterialPageRoute(builder: (context)=>Address('')));
             },
             child: Container(
                 width: 130,
@@ -113,14 +61,86 @@ class _CustAddressState extends State<CustAddress> {
     }
 
     Widget _buildListview(){
-      return Container(
+      return
+        Container(
         height: MediaQuery.of(context).size.height/2-30,
-        child: ListView.builder(
-            itemCount: 5,
-            itemBuilder: (context,index){
-              return _addressBuilder();
-            }),
+        width:  MediaQuery.of(context).size.width-20,
+        child:StreamBuilder<QuerySnapshot>(
+          stream: Firestore.instance.collection('Address').snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError)
+              return new Text('Error: ${snapshot.error}');
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting: return new Text('Loading...');
+              default:
+                return new ListView(
+                  children: snapshot.data.documents.map((DocumentSnapshot document) {
+                    return Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Card(
+                        elevation: 3,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left:10.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              IconButton(
+                                  icon: Icon(Icons.check_circle,color:document['check']?Colors.green:Colors.grey,),
+                                  onPressed: () {
+                                    Firestore.instance.collection('Address').document(document.documentID).updateData({'check':!document['check']});
+                                  }
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(document['city']),
+                                    Text(document['description'],
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        color: Color(0xffc01232),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  InkWell(
+
+                                    child: Image.asset('images/icon-edit.png',height: 30,width: 20),
+                                    onTap: ()async{
+                                     await Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Address(document.documentID)));
+
+                                    },
+
+                                  ),
+                                  SizedBox(width: 20,),
+                                  InkWell(
+                                    child: Image.asset('images/icon-trash.png',height: 30,width: 20),
+
+                                    onTap: ()async{
+                                     await Firestore.instance.collection('Address').document(document.documentID).delete();
+
+                                    },
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                );
+            }
+          },
+        )
       );
+
+
     }
 
 

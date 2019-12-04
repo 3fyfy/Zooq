@@ -2,26 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 
-final List<String> imgList = [
-  'images/1.jpg',
-  'images/2.jpg',
-  'images/1.jpg',
-  'images/1.jpg',
-  'images/3.jpg',
 
-];
+//final List child = map<Widget>(imgList, (index, i) {
+//  return Container(
+//    margin: EdgeInsets.all(0.0),
+//    child: Container(
+//      child: Stack(children: <Widget>[
+//        Image.asset(i, fit: BoxFit.cover, width:100,)
+//      ]),
+//    ),
+//  );
+//},
+//).toList();
 
-final List child = map<Widget>(imgList, (index, i) {
-    return Container(
-      margin: EdgeInsets.all(0.0),
-      child: Container(
-        child: Stack(children: <Widget>[
-          Image.asset(i, fit: BoxFit.cover, width:100,)
-        ]),
-      ),
-    );
-  },
-).toList();
 
 List<T> map<T>(List list, Function handler) {
   List<T> result = [];
@@ -34,12 +27,23 @@ List<T> map<T>(List list, Function handler) {
 
 
 class CarouselImage extends StatefulWidget {
+ final List<dynamic>images;
+
+   CarouselImage({ this.images}) ;
+
+
   @override
-  _CarouselImageState createState() => _CarouselImageState();
+  _CarouselImageState createState() => _CarouselImageState(this.images);
 }
 
 class _CarouselImageState extends State<CarouselImage> {
   int _current = 0;
+  final List<dynamic>imgList;
+
+
+  _CarouselImageState(this.imgList);
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -58,7 +62,7 @@ class _CarouselImageState extends State<CarouselImage> {
             return Container(
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(0.0)),
-                child: Image.asset(url, fit: BoxFit.cover,),
+                child: Image.network(url, fit: BoxFit.cover,),
               ),
             );
           },

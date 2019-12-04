@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../component/ButtonLogin.dart';
+import 'package:zooq/Screens/component/ButtonLogin.dart';
 
 import 'package:zooq/Screens/Main Nav Bar/Mainnavbar.dart';
+import 'user_controller.dart';
 
 
 class Login extends StatefulWidget {
@@ -11,28 +12,34 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  UserController userController=UserController();
 
-  Widget _buildTextField(String hintText,String icon,bool secure)
+  TextEditingController _emailController=TextEditingController();
+  TextEditingController _passwordController=TextEditingController();
+
+  @override
+  void dispose(){
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+
+  }
+
+
+   _InputDecoration(String hintText,String icon)
   {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20,right: 25,left: 15),
-      child: TextFormField(
-        obscureText: secure,
+   return InputDecoration(
+      hintText: hintText,
 
-        decoration: InputDecoration(
-            hintText: hintText,
+      border:UnderlineInputBorder(borderSide: BorderSide(style: BorderStyle.solid,)),
+      hintStyle: TextStyle(fontSize: 16),
+      prefixIcon: Image(image: AssetImage(icon)),
 
-            border:UnderlineInputBorder(borderSide: BorderSide(style: BorderStyle.solid,)),
+     focusedBorder: UnderlineInputBorder(
+       borderSide: BorderSide(color: Theme.of(context).accentColor),
+     ),
+   );
 
-            //OutlineInputBorder(borderSide: BorderSide(style: BorderStyle.none,color: Colors.white)),
-            hintStyle: TextStyle(fontSize: 16),
-            prefixIcon: Image(image: AssetImage(icon)),
-       ),
-
-        cursorColor: Theme.of(context).accentColor,
-
-      ),
-    );
   }
 
 
@@ -58,8 +65,27 @@ class _LoginState extends State<Login> {
               ),
               child: ListView(
                 children: <Widget>[
-                  _buildTextField("اسم المستخدم او البريد الالكتروني", "images/icon-username.png", false),
-                  _buildTextField("كلمة المرور", "images/icon-password.png", true),
+              Padding(
+              padding: const EdgeInsets.only(top: 20,right: 25,left: 15),
+              child: TextFormField(
+                  controller:_emailController ,
+                  obscureText: false,
+                  decoration:_InputDecoration("اسم المستخدم او البريد الالكتروني", "images/icon-username.png"),
+                  cursorColor: Theme.of(context).accentColor,
+            ),
+          ),
+
+              Padding(
+                padding: const EdgeInsets.only(top: 20,right: 25,left: 15),
+                child: TextFormField(
+                  controller:_passwordController ,
+                  obscureText: true,
+                  decoration:_InputDecoration("كلمة المرور", "images/icon-password.png"),
+                  cursorColor: Theme.of(context).accentColor,
+
+                ),
+              ),
+
                   Padding(
                     padding: const EdgeInsets.only(top: 10,right: 25,left: 15),
                     child: Row(
@@ -71,7 +97,47 @@ class _LoginState extends State<Login> {
                     ),
 
                   ),
-                  ButtonLogin("دخول الان", Mainnavbar()),
+              Padding(
+                padding: const EdgeInsets.only(top: 10,right: 25,left: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Center(
+                      child: InkWell(
+                          onTap: ()async{
+                            String  email=_emailController.text;
+                            String  password=  _passwordController.text;
+                           await userController.loginController(email,password);
+                            Navigator.of(context).pushReplacementNamed('/navbar');                          },
+                          child: Container(
+                              width: 140,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  color: Theme.of(context).accentColor,
+                                  border: Border.all(color: Theme.of(context).accentColor,style: BorderStyle.solid),
+                                  borderRadius: BorderRadius.all(Radius.circular(50))
+
+                              ),
+                              child: Container(
+                                width: 130,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context).accentColor,
+                                    border: Border.all(color: Colors.white,style: BorderStyle.solid),
+                                    borderRadius: BorderRadius.all(Radius.circular(50))
+
+
+                                ),
+                                child: Center(
+
+                                    child: Text("دخول الان",style: TextStyle(fontSize: 20,color: Colors.white),)),
+                              ))),
+                    )
+                  ],
+                ),
+
+              ),
+                  //ButtonLogin("دخول الان", Mainnavbar()),
                   Padding(
                     padding: const EdgeInsets.only(top: 15),
                     child: Row(
@@ -120,14 +186,7 @@ class _LoginState extends State<Login> {
           ),),
           centerTitle: true,
           leading:Image(image:AssetImage('images/icon-logo3.png')) ,
-          actions: <Widget>[
-            IconButton(icon: Icon(Icons.shopping_cart), onPressed:(){
-              Navigator.of(context).pushNamed('/cart');
-            }),
-            IconButton(icon: Icon(Icons.arrow_back_ios,textDirection: TextDirection.ltr
-              ,), onPressed: (){  Navigator.pop(context);
-            }),
-          ],
+
         ),
 
 

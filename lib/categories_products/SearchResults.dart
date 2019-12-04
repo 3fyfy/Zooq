@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 
 //component
-import 'component/GridViewProd.dart';
+import 'package:zooq/categories_products/GridViewProd.dart';
 
 class SerachResults extends StatefulWidget {
 
@@ -38,7 +38,7 @@ class _SerachResultsState extends State<SerachResults> {
             ],
           ),
 
-          body:GridViewProd()
+          body:GridViewProd('Product')
 
         )
 

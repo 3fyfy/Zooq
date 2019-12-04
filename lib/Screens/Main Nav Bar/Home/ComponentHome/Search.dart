@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 
 //screens
-import '../../../SearchResults.dart';
+import 'package:zooq/categories_products/SearchResults.dart';
 
 
 class Search extends StatefulWidget {

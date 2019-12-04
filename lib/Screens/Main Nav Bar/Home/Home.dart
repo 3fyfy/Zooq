@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 
 //component
 import 'ComponentHome/bghome.dart';
-import 'ComponentHome/ListProduct.dart';
+import 'package:zooq/categories_products/ListProduct.dart';
 import 'ComponentHome/Search.dart';
 import '../../component/AutoText.dart';
 
 
 //screens
-import 'package:zooq/Screens/men3tor.dart';
+import 'package:zooq/categories_products/men3tor.dart';
 
 
 class Home extends StatefulWidget {
@@ -18,6 +18,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+
 
 
 
@@ -42,6 +44,7 @@ class _HomeState extends State<Home> {
 
     return Container(
       color: Colors.white,
+      //padding: EdgeInsets.all(0),
       child: ListView(
 
         children: <Widget>[
@@ -79,7 +82,7 @@ class _HomeState extends State<Home> {
 
       Padding(
         padding: const EdgeInsets.only(right:10.0,left: 10),
-         child: Listprod(),
+         child: ListProd(),
       ),
 
 

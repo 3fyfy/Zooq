@@ -15,14 +15,19 @@ class MapView extends StatefulWidget {
 class _MapViewState extends State<MapView> {
 
   Completer<GoogleMapController> _controller = Completer();
+
  static var currentLocation = LatLng(37.42796133580664, -122.085749655962);
+  LatLng _lastPosition = currentLocation;
 
   var location = new Location();
+  final Set<Marker> _marker={};
+
 
 
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: currentLocation,
     zoom: 14.4746,
+
   );
 
   static final CameraPosition _kLake = CameraPosition(
@@ -46,13 +51,15 @@ class _MapViewState extends State<MapView> {
           children: <Widget>[
             GoogleMap(
               initialCameraPosition: _kGooglePlex,
-              mapType: MapType.hybrid,
+              mapType: MapType.normal,
               onMapCreated: (GoogleMapController controller) {
                 _controller.complete(controller);
               },
+              myLocationEnabled: true,
+              markers: _marker,
             ),
 
-            IconButton(icon: Icon(Icons.my_location), onPressed: (){
+            IconButton(icon: Icon(Icons.location_on), onPressed: (){
 
               location.onLocationChanged().listen((LocationData currentLocation) {
                 print(currentLocation.latitude);
